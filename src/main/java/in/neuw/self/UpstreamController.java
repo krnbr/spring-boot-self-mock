@@ -14,13 +14,16 @@ public class UpstreamController {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Autowired
-    RestTemplate restTemplate;
+    private final DownstreamClientService downstreamClientService;
+
+    public UpstreamController(DownstreamClientService downstreamClientService) {
+        this.downstreamClientService = downstreamClientService;
+    }
 
     @GetMapping("/v1/upstream")
     public Pong test() {
         logger.info("upstream url called");
-        return restTemplate.getForObject("/ping", Pong.class);
+        return downstreamClientService.getPong();
     }
 
 }
